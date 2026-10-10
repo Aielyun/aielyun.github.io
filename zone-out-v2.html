@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#1a3a5c">
+  <title>ZONE OUT · 移动体验优化版</title>
+  <style>
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: #eef2f6;
+    }
+    iframe {
+      display: block;
+      width: 100%;
+      height: 100vh;
+      height: 100dvh;
+      border: 0;
+      background: #eef2f6;
+    }
+  </style>
+</head>
+<body>
+  <iframe id="zoneOut" src="./index.html" title="ZONE OUT 移动体验版"></iframe>
+  <script>
+    const frame = document.getElementById("zoneOut");
+
+    frame.addEventListener("load", function () {
+      try {
+        const doc = frame.contentDocument;
+        if (!doc || !doc.head) return;
+
+        if (doc.getElementById("zone-out-v2-ux")) return;
+
+        const style = doc.createElement("style");
+        style.id = "zone-out-v2-ux";
+        style.textContent = `
+          * { -webkit-tap-highlight-color: transparent; }
+          button, .head-btn, .panel-toggle, .cat-tab,
+          .map-fs-btn, .map-loc-btn, .stat {
+            min-height: 44px;
+          }
+          input, select, textarea {
+            font-size: 16px !important;
+          }
+          .map-wrap {
+            border-radius: 14px !important;
+            box-shadow: 0 6px 24px rgba(19,49,75,.09) !important;
+          }
+          @media (max-width: 640px) {
+            header {
+              padding: 24px 14px 18px !important;
+            }
+            header h1 {
+              font-size: 23px !important;
+              line-height: 1.4;
+            }
+            .head-actions {
+              position: static !important;
+              justify-content: center;
+              margin: 0 auto 10px;
+            }
+            .wrap {
+              padding: 12px 10px calc(32px + env(safe-area-inset-bottom)) !important;
+            }
+            .cat-tabs {
+              justify-content: flex-start !important;
+              flex-wrap: nowrap !important;
+              overflow-x: auto !important;
+              padding: 3px 2px 8px;
+              scrollbar-width: none;
+            }
+            .cat-tabs::-
